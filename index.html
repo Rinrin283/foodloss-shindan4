@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>食品ロス、無意識にしてない？｜2分でわかる行動診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef4ef; --surface:#ffffff; --ink:#17332b; --sub:#4d6860; --line:#c9d9d0;
+  --main:#1f6f5c; --main-ink:#ffffff; --lit:#f2c230; --lit-ink:#3a2e00; --off:#dfe9e3;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1f1b; --surface:#172b25; --ink:#e6f1ec; --sub:#a3bdb3; --line:#2c453d;
+    --main:#5cc3a6; --main-ink:#06241c; --lit:#f2c230; --lit-ink:#3a2e00; --off:#233a33; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{--bg:#0f1f1b;--surface:#172b25;--ink:#e6f1ec;--sub:#a3bdb3;--line:#2c453d;--main:#5cc3a6;--main-ink:#06241c;--off:#233a33;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.8;font-size:16px}
+main{max-width:640px;margin:0 auto;padding:28px 18px 56px}
+h1{font-size:clamp(28px,7vw,40px);line-height:1.3;margin:0 0 14px;font-weight:900;letter-spacing:.02em}
+h2{font-size:20px;margin:0 0 8px;font-weight:700}
+p{margin:0 0 12px}
+.sub{color:var(--sub)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:14px;padding:14px 22px;background:var(--main);color:var(--main-ink);cursor:pointer;font-size:17px}
+.btn.ghost{background:transparent;color:var(--main);border:2px solid var(--main)}
+.btn:focus-visible,.choice:focus-visible{outline:3px solid var(--lit);outline-offset:3px}
+.axes-row{display:flex;gap:8px;margin:22px 0}
+.lamp{flex:1;border-radius:12px;padding:10px 4px;text-align:center;background:var(--off);color:var(--sub);font-weight:700;font-size:14px;line-height:1.4}
+.lamp b{display:block;font-size:22px}
+.lamp.on{background:var(--lit);color:var(--lit-ink)}
+.note{font-size:13px;color:var(--sub);border-left:4px solid var(--line);padding-left:12px;margin-top:28px}
+.bar{height:8px;background:var(--off);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;background:var(--main);width:0;transition:width .3s}
+.q-meta{display:flex;justify-content:flex-end;color:var(--sub);font-size:14px;margin-bottom:18px}
+.q-title{font-size:22px;font-weight:700;line-height:1.5;margin:0 0 20px}
+.choice{display:block;width:100%;text-align:left;font:inherit;font-size:16px;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:border-color .15s,transform .15s}
+.choice:hover{border-color:var(--main)}
+.choice:active{transform:scale(.98)}
+.choice span{display:inline-block;width:28px;height:28px;border-radius:50%;background:var(--main);color:var(--main-ink);text-align:center;line-height:28px;font-weight:700;margin-right:10px;font-size:14px}
+.back{background:none;border:0;color:var(--sub);font:inherit;cursor:pointer;padding:8px 0;text-decoration:underline}
+.type-name{font-size:clamp(30px,8vw,42px);font-weight:900;line-height:1.35;margin:4px 0 6px}
+.code{font-size:14px;color:var(--sub)}
+.catch{display:block;font-size:17px;font-weight:700;color:var(--main);line-height:1.6;margin-bottom:2px}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:16px 18px 6px;margin:12px 0}
+.card.flag{border-color:var(--lit)}
+.card h3{margin:0 0 4px;font-size:18px}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:99px;padding:2px 10px;background:var(--off);color:var(--sub);margin-bottom:8px}
+.card.flag .tag{background:var(--lit);color:var(--lit-ink)}
+.card h4{margin:12px 0 2px;font-size:14px;color:var(--main)}
+.card ul{margin:2px 0 12px;padding-left:20px}
+.card li{margin-bottom:2px}
+.pg{font-size:14px;color:var(--sub)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.hero{--hc:#ffd23f;position:relative;background:var(--hc);color:#1b1340;border:3px solid #1b1340;border-radius:28px;box-shadow:7px 7px 0 #1b1340;padding:22px 20px 24px;margin-top:6px;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.9) rotate(-2deg);opacity:0}to{transform:none;opacity:1}}
+.chip{display:inline-block;background:#fff;border:2px solid #1b1340;border-radius:99px;padding:1px 12px;font-size:13px;font-weight:700}
+.emo{font-size:84px;line-height:1.1;margin:8px 0 0;text-align:center;filter:drop-shadow(4px 4px 0 rgba(27,19,64,.25))}
+.catch2{font-size:17px;font-weight:700;line-height:1.5;margin:6px 0 10px;text-align:center}
+.tname{display:block;width:fit-content;max-width:100%;margin:0 auto 14px;background:#fff;border:3px solid #1b1340;border-radius:16px;box-shadow:5px 5px 0 #1b1340;padding:6px 16px;font-size:clamp(28px,8.5vw,42px);font-weight:900;line-height:1.3;text-align:center;transform:rotate(-2deg)}
+.tdesc{font-size:17px;font-weight:700;text-align:center;margin:0 0 16px}
+.stickers{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.stk{background:#fff;border:2px solid #1b1340;border-radius:99px;padding:3px 12px;font-size:14px;font-weight:700;opacity:.75}
+.stk.on{background:#1b1340;color:#fff;opacity:1;transform:rotate(-2deg)}
+.sec{font-size:22px;font-weight:900;margin:30px 0 6px}
+.mc{--ac:#ff8fb8;background:var(--ac);color:#1b1340;border:3px solid #1b1340;border-radius:22px;box-shadow:5px 5px 0 #1b1340;padding:14px 18px 12px;margin:16px 4px 18px 0}
+.mc:nth-child(even){transform:rotate(.7deg)}
+.mc:nth-child(odd){transform:rotate(-.7deg)}
+.mc .t{display:inline-block;background:#1b1340;color:#fff;border-radius:99px;padding:1px 12px;font-size:13px;font-weight:700;margin-bottom:6px}
+.mc p{margin:0 0 6px;font-weight:500}
+.mc .row{background:rgba(255,255,255,.7);border-radius:12px;padding:8px 12px;margin-bottom:8px}
+.mc .row b{display:block;font-size:12px}
+.mc .pg{font-size:12px;opacity:.75}
+.share{text-align:center;font-weight:700;margin:26px 0 12px}
+.btn.big{display:block;width:100%;background:#1b1340;color:#fff;border:3px solid #1b1340;box-shadow:5px 5px 0 var(--main);border-radius:18px}
+.btn.big:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--main)}
+@media (prefers-color-scheme:dark){.btn.big{background:#fff;color:#1b1340}}
+@media (prefers-reduced-motion:reduce){.hero{animation:none}}
+
+/* quiz & start: sticker style */
+.btn{border:3px solid #1b1340;box-shadow:5px 5px 0 #1b1340;color:#fff;background:#1f6f5c}
+.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #1b1340}
+@media (prefers-color-scheme:dark){.btn:not(.big){color:#06241c;background:#5cc3a6}}
+.lamp.on{border:3px solid #1b1340;box-shadow:3px 3px 0 #1b1340}
+.lamp.on:nth-child(1){background:#ff9ec4}.lamp.on:nth-child(2){background:#ffd23f}.lamp.on:nth-child(3){background:#7ee8c4}.lamp.on:nth-child(4){background:#8fb4ff}
+.bar{height:18px;background:#fff;border:3px solid #1b1340;border-radius:99px;margin-bottom:14px}
+.bar i{background:repeating-linear-gradient(45deg,#ff9ec4 0 10px,#ffb8d4 10px 20px)}
+.q-meta{margin-bottom:22px}
+#qNum{background:#ffd23f;color:#1b1340;border:3px solid #1b1340;border-radius:99px;padding:0 14px;font-weight:900;font-size:15px}
+.q-title{background:#fff;color:#1b1340;border:3px solid #1b1340;border-radius:22px;box-shadow:5px 5px 0 #1b1340;padding:20px 18px;margin:0 6px 26px 0;transform:rotate(-1deg);font-weight:900}
+.choice{background:#fff;color:#1b1340;border:3px solid #1b1340;border-radius:20px;box-shadow:5px 5px 0 #1b1340;font-weight:700;padding:16px;margin:0 6px 16px 0}
+.choice:nth-child(1){background:#ffe3ee}.choice:nth-child(2){background:#e0ebff}
+.choice:hover{border-color:#1b1340;transform:translate(-1px,-1px)}
+.choice:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #1b1340}
+.choice span{background:#1b1340;color:#fff}
+.back{margin-top:6px;font-weight:700}
+/* result */
+.about{background:#fff;color:#1b1340;border:3px solid #1b1340;border-radius:22px;box-shadow:5px 5px 0 #1b1340;padding:16px 18px 10px;margin:26px 6px 0 0}
+.about h2{font-size:20px;font-weight:900;margin:0 0 6px}
+.about h3{font-size:15px;font-weight:900;margin:14px 0 4px}
+.about ul{margin:0 0 8px;padding-left:20px}.about li{margin-bottom:4px}
+.good{background:#d9f7ec;border-radius:14px;padding:4px 14px 6px;margin-top:12px}
+.exp{background:#fff3c4;border-radius:14px;padding:4px 14px 6px;margin-top:12px}
+.step{display:flex;gap:14px;align-items:flex-start;background:var(--ac);color:#1b1340;border:3px solid #1b1340;border-radius:22px;box-shadow:5px 5px 0 #1b1340;padding:14px 16px;margin:16px 6px 0 0}
+.step .no{flex:none;width:42px;height:42px;border-radius:50%;background:#1b1340;color:#fff;font-weight:900;font-size:22px;text-align:center;line-height:42px}
+.step h3{margin:0 0 2px;font-size:18px;font-weight:900;line-height:1.4}
+.step p{margin:0 0 4px;font-weight:500}
+.step .pg{font-size:12px;opacity:.75}
+/* calmer result + straight question */
+.q-title{transform:none}
+.hero{--hc:#ffe08a}
+.tname{transform:none}
+.stk.on{transform:none}
+.good,.exp{background:#f4f5f3}
+.step{background:#fff;transform:none}
+.step .no{background:var(--ac);color:#1b1340;border:3px solid #1b1340}
+.hero-art{display:block;width:min(100%,320px);margin:0 auto 10px}
+#start h1{text-align:center;font-size:clamp(30px,8.5vw,42px)}
+#start .lead{font-size:18px;font-weight:700}
+.pg a{color:inherit;font-weight:700;text-decoration:underline}
+.more{text-align:center;margin:34px 0 4px}
+.more-t{font-weight:900;font-size:20px;margin:0 0 12px}
+.more-s{font-size:14px;margin:12px 0 0}
+.more-s a{color:var(--sub)}
+a.btn.big{text-decoration:none;text-align:center}
+#start .subtitle{text-align:center;font-size:18px;font-weight:700;color:var(--main);margin:-4px 0 18px}
+.choice.sel{background:#ffd23f}
+.pick{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;font-weight:900;font-size:17px;line-height:1.5;background:#fff;color:#1b1340;border:3px solid #1b1340;border-radius:20px;box-shadow:5px 5px 0 #1b1340;padding:14px 16px;margin:0 6px 14px 0;cursor:pointer}
+.pick .no{flex:none;width:36px;height:36px;border-radius:50%;background:var(--ac);border:3px solid #1b1340;text-align:center;line-height:30px;font-weight:900}
+.pick[aria-checked="true"]{background:#ffe08a}
+.pick:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #1b1340}
+.dobox{background:#fff;color:#1b1340;border:3px dashed #1b1340;border-radius:20px;padding:12px 16px;margin:4px 6px 14px 0}
+.dobox b{display:block;font-size:14px}
+.dobox .pg{margin:6px 0 0}
+.review{margin:22px 6px 0 0;background:#fff;color:#1b1340;border:3px solid #1b1340;border-radius:18px;padding:10px 14px}
+.review summary{font-weight:900;cursor:pointer}
+.rv{padding:10px 0;border-top:1px solid #ddd}
+.rv small{display:block;font-weight:700}
+.rv button{font:inherit;font-size:14px;display:block;width:100%;text-align:left;margin-top:6px;padding:8px 10px;border:2px solid #1b1340;border-radius:12px;background:#fff;color:#1b1340;cursor:pointer}
+.rv button.sel{background:#ffd23f;font-weight:700}
+.exp summary{cursor:pointer;font-weight:700;margin-top:4px}
+.data{background:#fff;color:#1b1340;border:2px solid #1b1340;border-radius:14px;padding:8px 14px;font-size:13px;margin:0 0 16px}
+.tlist{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0}
+.tl{display:flex;flex-direction:column;align-items:center;text-align:center;background:#fff;color:#1b1340;border:1.5px solid #1b1340;border-radius:10px;padding:6px 2px;line-height:1.3;overflow-wrap:anywhere}
+.tl .te{font-size:16px}
+.tl .tn{font-weight:900;font-size:10px}
+.tl .tc{font-size:9px;opacity:.7}
+.tl.me{background:#ffe08a;border-width:2px;box-shadow:2px 2px 0 #1b1340}
+</style>
+</head>
+<body>
+<main>
+
+<section id="start">
+  <svg class="hero-art" viewBox="0 0 320 230" role="img" aria-label="笑顔の冷蔵庫と、りんご・にんじん・牛乳パックのイラスト">
+    <ellipse cx="160" cy="212" rx="110" ry="9" fill="#1b1340" opacity=".15"/>
+    <g stroke="#1b1340" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="108" y="32" width="124" height="172" rx="18" fill="#1b1340"/>
+      <rect x="100" y="24" width="124" height="172" rx="18" fill="#7ee8c4"/>
+      <path d="M100 82H224" fill="none"/>
+      <rect x="202" y="46" width="8" height="24" rx="4" fill="#fff"/>
+      <rect x="202" y="98" width="8" height="40" rx="4" fill="#fff"/>
+      <circle cx="138" cy="122" r="5" fill="#1b1340"/>
+      <circle cx="178" cy="122" r="5" fill="#1b1340"/>
+      <path d="M146 138Q158 150 170 138" fill="none"/>
+      <rect x="58" y="112" width="46" height="72" rx="6" fill="#fff" transform="rotate(-10 81 148)"/>
+      <path d="M60 126L82 108L104 122" fill="#8fb4ff" transform="rotate(-10 81 148)"/>
+      <circle cx="262" cy="72" r="26" fill="#ff6b8b"/>
+      <path d="M262 46Q264 36 274 34" fill="none"/>
+      <path d="M246 150L292 170L250 206Z" fill="#ff9f5a"/>
+      <path d="M246 150L236 138M246 150L252 134" fill="none" stroke="#2f9e5b"/>
+    </g>
+    <circle cx="130" cy="134" r="6" fill="#ff9ec4" opacity=".8"/>
+    <circle cx="186" cy="134" r="6" fill="#ff9ec4" opacity=".8"/>
+    <text x="30" y="56" font-size="26" fill="#ffd23f" stroke="#1b1340" stroke-width="1.5">✦</text>
+    <text x="278" y="130" font-size="20" fill="#ffd23f" stroke="#1b1340" stroke-width="1.5">✦</text>
+    <g transform="rotate(-8 60 42)"><rect x="28" y="22" width="70" height="28" rx="14" fill="#ffd23f" stroke="#1b1340" stroke-width="4"/><text x="63" y="42" font-size="15" font-weight="900" text-anchor="middle" fill="#1b1340">2分で完了</text></g>
+  </svg>
+  <h1>食品ロス、<br>無意識にしてない？</h1>
+  <p class="subtitle">2分でわかる行動診断</p>
+  <p class="lead">通学、通勤、家事、育児、仕事、勉強…。毎日いそがしいのに、食品ロスなんて気にしてられない！そう思ってない？</p>
+  <p>2分だけ、いつもの行動をふり返ってみよう。あなたの暮らしに、食品ロスの“きっかけ”が隠れてるかも。</p>
+  <p class="sub">正解はないよ。直感でサクッと選んでね。</p>
+  <div class="data"><b>📝 回答の記録について</b><br>診断の改善のために、12問の回答（A/B）・診断コード・送信日時を記録します。メールアドレスなど個人情報は一切取得しません。</div>
+  <button class="btn big" id="go">診断をはじめる</button>
+  <p class="note">試作版です。対策は消費者庁の食品ロス削減ガイドブックを参考にしています。</p>
+</section>
+
+<section id="quiz" hidden>
+  <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><i></i></div>
+  <div class="q-meta"><span id="qNum"></span></div>
+  <p class="q-title" id="qText"></p>
+  <div id="choices"></div>
+  <button class="back" id="back">ひとつ前に戻る</button>
+</section>
+
+<section id="result" hidden>
+  <div class="hero" id="hero">
+    <span class="chip" id="codeLine"></span>
+    <div class="emo" id="emo"></div>
+    <div class="catch2" id="catchTxt"></div>
+    <div class="tname" id="typeName"></div>
+    <p class="tdesc" id="focus"></p>
+    <div class="stickers" id="lamps"></div>
+  </div>
+  <div class="about">
+    <h2>あなたってこんな人</h2>
+    <p id="pers"></p>
+    <div class="good"><h3>✨ いいところ</h3><ul id="goodList"></ul></div>
+    <div class="exp"><h3>👀 今回の回答で気になったこと</h3><ul id="expList"></ul>
+      <details id="moreExp" hidden><summary id="moreSum"></summary><ul id="moreList"></ul></details></div>
+  </div>
+  <h2 class="sec" id="secTitle">今週やってみるなら？1つ選んでね</h2>
+  <div id="cards" role="radiogroup" aria-label="今週やってみること"></div>
+  <div id="doBox" class="dobox" hidden aria-live="polite"></div>
+  <details class="review"><summary>回答をふり返る・直す</summary><div id="reviewList"></div></details>
+  <h2 class="sec">ほかの診断結果もチェック</h2>
+  <p class="sub" style="margin:0 0 12px;font-size:14px">全16タイプ。コードは左から購入・調理・保管・食べ切りで、1が「ロスのきっかけがありそうな軸」だよ。</p>
+  <div id="typeList" class="tlist"></div>
+  <p class="share">スクショして友達にシェアしてね📸</p>
+  <button class="btn big" id="retry">もう一回やってみる</button>
+  <div class="more">
+    <p class="more-t">もっと知りたい人はこちら！⬇️</p>
+    <a class="btn big" href="https://www.caa.go.jp/policies/policy/consumer_policy/information/food_loss/pamphlet/assets/consumer_education_cms201_260911_01.pdf" target="_blank" rel="noopener">食品ロス削減ガイドブックを読む</a>
+    <p class="more-s"><a href="https://www.caa.go.jp/policies/policy/consumer_policy/information/food_loss/pamphlet/#guidebook" target="_blank" rel="noopener">消費者庁のページで見る（令和8年度版）</a></p>
+  </div>
+  <p class="note">試作版の診断だよ。自分の行動をふり返るきっかけとして使ってね。</p>
+</section>
+
+</main>
+<script>
+const AX = [
+  {k:"P", name:"購入", sub:"何を、どのくらい買うか"},
+  {k:"C", name:"調理", sub:"何を、どのくらい作るか"},
+  {k:"S", name:"保管・管理", sub:"食品を把握し、保管できているか"},
+  {k:"U", name:"食べ切り・活用", sub:"残った食品をどう活用するか"}
+];
+// risk: 'A' or 'B' = the answer that counts as 1
+const Q = [
+  {a:0,q:"特売品やワゴンセールを見つけたら？",A:"使う予定がなくても、お得だと買っちゃう",B:"使う予定や量を考えてから買う",risk:"A"},
+  {a:0,q:"買い物に行く前は？",A:"冷蔵庫や食品庫の中身を確認する",B:"必要そうなものを思い浮かべて買いに行く",risk:"B"},
+  {a:0,q:"新商品を見つけたら？",A:"使い道や食べる予定を考えてから買う",B:"試してみたくて、つい買っちゃう",risk:"B"},
+  {a:1,q:"献立はどう決める？",A:"その日の気分で決める",B:"家にある食材や予定を考えて決める",risk:"A"},
+  {a:1,q:"料理やお菓子を作るときは？",A:"作りたい量を優先して、多めに作ることがある",B:"食べる人数や量に合わせて作る",risk:"A"},
+  {a:1,q:"作りたい料理の材料が家に足りなかったら？",A:"材料を買い足して、作りたいものを作る",B:"家にある食材で代用するか、別の料理にする",risk:"A"},
+  {a:2,q:"冷蔵庫や冷凍庫、お菓子棚の中は？",A:"食品がいっぱいで、お宝探し状態！",B:"何がどこにあるか、だいたい把握してる",risk:"A"},
+  {a:2,q:"買ったはずの食品が見つからないことは？",A:"ある！後から奥や別の場所で見つかる",B:"あまりない。置き場所を把握してる",risk:"A"},
+  {a:2,q:"「いつか使うかも」と買った食品は？",A:"使う予定が決まらないまま残りがち",B:"使う予定を考えて買うことが多い",risk:"A"},
+  {a:3,q:"食べかけのお菓子や開封した食品は？",A:"食べきれずに残ってることが多い",B:"食べきれる量だけ開けるなど、残さないようにしてる",risk:"A"},
+  {a:3,q:"料理や食材が余ったら？",A:"次に食べる日や使い道が決まらず、残りがち",B:"次に食べる日を決めたり、別の料理に使ったりする",risk:"A"},
+  {a:3,q:"期限が近い食品を見つけたら？",A:"使い道が思いつかず、そのまま残ることがある",B:"先に使う献立を考えたり、食べる予定を調整したりする",risk:"A"}
+];
+const TYPES = {
+"0000":["すっきり管理タイプ","4軸全体を維持・確認する"],
+"0001":["あと一歩の使い切りタイプ","開封後や余った食品の活用"],
+"0010":["在庫見直しタイプ","食品の置き場所・保管状況"],
+"0011":["見つけて活用タイプ","在庫の把握と食べ切り"],
+"0100":["作る量チェックタイプ","献立や調理量の決め方"],
+"0101":["料理と残り物見直しタイプ","調理量と余った食品の活用"],
+"0110":["調理と保管の見直しタイプ","調理量と在庫管理"],
+"0111":["作り方としまい方見直しタイプ","調理・保管・食べ切り"],
+"1000":["買い物見直しタイプ","購入前の確認と買う量"],
+"1001":["買い方と使い切り見直しタイプ","購入と食べ切りのつながり"],
+"1010":["買い物と在庫の確認タイプ","購入と保管・在庫管理"],
+"1011":["買いすぎと在庫の見直しタイプ","購入・保管・食べ切り"],
+"1100":["買い方と作る量の見直しタイプ","購入と調理量"],
+"1101":["買い方・作り方・残り物の見直しタイプ","購入・調理・食べ切り"],
+"1110":["買い方・作り方・在庫の見直しタイプ","購入・調理・保管"],
+"1111":["食品の流れをまるごと見直すタイプ","購入から食べ切りまでの一連の行動"]
+};
+const T = {
+"0000":["ムダなく回せるあなたは、","冷蔵庫マスター","買う・作る・しまう・食べ切る、ぜんぶ安定。このままキープでOK！"],
+"0001":["ほぼ完璧なのに、開けたあとが甘いあなたは、","あと一口ハンター","段取りは上手。開けたお菓子や余りものが、ちょっとだけ残りがち。"],
+"0010":["買うも作るもOKだけど、冷蔵庫の奥は未踏エリアなあなたは、","冷蔵庫ダンジョンの主","奥から謎の食品が出てくる系。発掘すると期限がひとり旅してる。"],
+"0011":["しまい込んで、気づいたら出番を逃すあなたは、","お宝発掘トレジャーハンター","食品を見つける力はある。あとは食べる日を決めるだけ。"],
+"0100":["その日の気分が献立を決めるあなたは、","きまぐれシェフ","自由で楽しい料理派。量だけ気にすれば、一気に無敵になる。"],
+"0101":["ついテンション上がって作りすぎるあなたは、","もりもりパーティーシェフ","作るのは楽しい。でも余りの行き先が決まらないことがある。"],
+"0110":["作るのは楽しいけど、冷蔵庫が散らかりがちなあなたは、","勢いキッチン冒険家","ノリで作れる行動力が強み。しまい方を整えたら最強。"],
+"0111":["料理もしまうのも食べ切るのも、ゆるっとなあなたは、","ゆるふわキッチン隊長","気楽でマイペース。ちょっと整えるだけで一気に変わる。"],
+"1000":["「お得！」「新作！」に弱いあなたは、","お得センサー全開ハンター","見つける力はピカイチ。買う前のひと呼吸で、さらに強くなる。"],
+"1001":["買った瞬間がピークになりがちなあなたは、","買って満足コレクター","ワクワクして買うけど、食べる出番が後回しになりやすい。"],
+"1010":["買い物前の確認をスルーしがちなあなたは、","とりあえず買っとく族","気づいたら同じものが家に2つ。冷蔵庫の中身、実はけっこう大事。"],
+"1011":["とりあえず買って、そのまま眠らせがちなあなたは、","ストック沼の住人","買う・しまう・残るがセットで起きやすい。ここを断てば一気に変わる。"],
+"1100":["買うのも作るのもノリで盛っちゃうあなたは、","ノリノリ大盛りマスター","気前がいいのが魅力。量の目安だけ持てば、ムダなく楽しめる。"],
+"1101":["買う・作る・余るがセットになりがちなあなたは、","つくりすぎ祭りの主催者","みんなで食べる前提で盛るタイプ。余りの次の出番を決めたい。"],
+"1110":["買い物から冷蔵庫までノリで動くあなたは、","勢い全開キッチン番長","行動力は抜群。ちょっとブレーキを足すだけで、かなり変わる。"],
+"1111":["食べ物への好奇心がぜんぶ全開なあなたは、","食欲フルスロットル族","食べ物が大好きなのが伝わる結果。伸びしろがいちばん大きいよ。"]
+};
+const QD = [
+ {good:"お得でも、使う予定を考えてから買えてる",bad:"お得だと、使う予定がなくても買っちゃう",title:"買う前に「いつ使う？」を考える",scene:"特売コーナーでカゴに入れる前に、「今週のどのごはんに使う？」と心の中で聞いてみる。",pg:"p.58"},
+ {good:"買い物の前に、冷蔵庫や食品庫を確認できてる",bad:"買い物の前に、家にあるものを確認してないことがある",title:"出かける前に冷蔵庫を撮る",scene:"次の買い物に出る前に、冷蔵庫の中をスマホで撮って、買い物中に見返す。",pg:"p.58"},
+ {good:"新商品も、使い道を考えてから買えてる",bad:"新商品は、使い道を決める前につい買っちゃう",title:"新商品は食べる日を決めてからレジへ",scene:"新商品をカゴに入れる前に、食べる日を1つ決める（例：今夜の夕食）。",pg:"p.58"},
+ {good:"家にある食材や予定を見て、献立を決められてる",bad:"献立をその日の気分で決めがち",title:"献立の前に、期限が近いものを1つ探す",scene:"夕食を決める前に冷蔵庫を開けて、期限が近いものを1つ選んでメニューに入れる。",pg:"p.64"},
+ {good:"食べる人数や量に合わせて作れてる",bad:"作りたい量を優先して、多めに作ることがある",title:"作る前に「何人分？」を決める",scene:"料理を始める前に食べる人数を数えて、材料をその人数分に合わせる。",pg:"p.64"},
+ {good:"材料が足りないときは、家にあるもので代用や別メニューにできてる",bad:"材料が足りないときは、買い足して作りがち",title:"足りないときは、まず家にあるもので代用",scene:"材料が足りないと気づいたら、買いに行く前に、冷蔵庫のものでできる別メニューを1分だけ探す。",pg:"p.64"},
+ {good:"何がどこにあるか、だいたい把握できてる",bad:"冷蔵庫や棚がいっぱいで、何があるか探しがち",title:"冷蔵庫の1段だけ整理する",scene:"週末に冷蔵庫の1段だけ取り出して、期限が近いものを手前に並べ直す。",pg:"p.74"},
+ {good:"買った食品の置き場所を、ちゃんと把握できてる",bad:"買ったはずの食品が、あとから奥で見つかることがある",title:"食品の定位置を決める",scene:"買い物から帰ったら、新しく買った食品を「手前の定位置」に入れる。",pg:"p.68"},
+ {good:"「いつか使うかも」より、使う予定を考えて買えてる",bad:"「いつか使うかも」の食品が、予定のないまま残りがち",title:"「いつか使うかも」に使う日をつける",scene:"家にある「いつか使うかも」の食品を1つ選んで、今週のどこで使うか決める。",pg:"p.68"},
+ {good:"食べきれる量だけ開けるなど、残さない工夫がある",bad:"開けたお菓子や食品が、食べきれず残りがち",title:"開けるときは食べ切れる量だけ",scene:"お菓子を開けるとき、食べ切れる分だけ出して、残りはすぐ封をする。",pg:"p.56"},
+ {good:"余った料理や食材の、次の出番を決められてる",bad:"余った料理や食材の次の出番が決まらず、残りがち",title:"余ったら、その場で「次いつ食べる？」",scene:"食事のあと、余りを保存容器に入れるときに、食べる日をスマホのメモか付箋に書く。",pg:"p.64"},
+ {good:"期限が近い食品を、先に使う献立にできてる",bad:"期限が近い食品の使い道が思いつかず、残ることがある",title:"期限がいちばん近いものを明日のごはんに",scene:"冷蔵庫で期限がいちばん近いものを1つ選んで、明日のごはんに入れる。",pg:"p.56"}
+];
+const PERS = {
+"0000":"計画的で、先のことまで考えられるタイプ。冷蔵庫の中も頭の中もスッキリしてるはず。",
+"0001":"段取り上手でしっかり者。ただ、ラストの詰めだけちょっと気が抜けちゃう愛されキャラ。",
+"0010":"買い物も料理もそつなくこなす器用タイプ。ただ、冷蔵庫の中までは目が届かないことも。",
+"0011":"食品を見つけるのは得意だけど、食べる日を決めるのは後回しにしがちなマイペース派。",
+"0100":"その場のひらめきを大事にする自由人。決まりごとより、気分と直感で動くタイプ。",
+"0101":"サービス精神旺盛で、つい「もっと作っちゃお！」となるムードメーカー気質。",
+"0110":"思い立ったらすぐ動ける行動派。やりたい気持ちが先に走って、片付けが追いつかないことも。",
+"0111":"細かいことは気にしないおおらかタイプ。ゆるさは魅力だけど、ちょっとだけ整えたい。",
+"1000":"好奇心旺盛で、いい情報をキャッチするのが得意。「お得」「新作」に出会うとテンションが上がる。",
+"1001":"ワクワクを大事にする楽しみ上手。買った瞬間の気持ちが最高潮になりやすい。",
+"1010":"フットワーク軽めで、行き当たりばったりも楽しめるタイプ。確認は後回しになりがち。",
+"1011":"ストックがあると安心したい心配性さん。気づいたら家に備蓄が増えてる。",
+"1100":"気前がよくてノリのいい盛り上げ役。やるなら全力で、量も勢いもつい増えがち。",
+"1101":"みんなでワイワイが好きなパーティー気質。盛り上がると量の感覚がバグりがち。",
+"1110":"決めたらすぐ動く勢い型。スピード感はあるけど、ブレーキを踏むのはちょっと苦手。",
+"1111":"好奇心も食欲もフルパワーの食いしん坊。熱量が高いからこそ、伸びしろ大。"
+};
+
+const PDF = "https://www.caa.go.jp/policies/policy/consumer_policy/information/food_loss/pamphlet/assets/consumer_education_cms201_260911_01.pdf";
+const PDFPAGE = {56:30, 58:31, 64:34, 68:36, 74:39}; // 印刷ページ -> PDF上のページ（見開き単位）
+function pgLinks(s){
+  return (s.match(/\d+/g)||[]).map(n=>'<a href="'+PDF+'#page='+PDFPAGE[n]+'" target="_blank" rel="noopener">p.'+n+'</a>').join("・");
+}
+const $ = id => document.getElementById(id);
+let idx = 0, ans = [];
+function show(id){["start","quiz","result"].forEach(s=>$(s).hidden = s!==id); window.scrollTo(0,0);}
+let lock=false;
+function lockIt(){ lock=true; setTimeout(()=>{lock=false;},600); }
+const FORM="https://docs.google.com/forms/d/e/1FAIpQLSfAhPKfEfvaD4mnyxkoE-MuxniWB_2dyokbP0nQ6GiApKNv4Q/formResponse";
+let sendT=null, pending=null;
+function queueSend(){ pending={p:ans.join(""),c:compute().code}; clearTimeout(sendT); sendT=setTimeout(flush,8000); }
+function flush(){
+  if(!pending) return; clearTimeout(sendT);
+  const d=pending; pending=null;
+  try{
+    const body=new URLSearchParams({"entry.1428677149":d.p,"entry.1696568359":d.c});
+    if(navigator.sendBeacon && document.visibilityState==="hidden"){ navigator.sendBeacon(FORM,body); }
+    else{ fetch(FORM,{method:"POST",mode:"no-cors",body}).catch(()=>{}); }
+  }catch(e){}
+}
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden") flush(); });
+window.addEventListener("pagehide",flush);
+
+function renderQ(){
+  const q = Q[idx];
+  $("qNum").textContent = (idx+1) + " / 12";
+  $("qText").textContent = q.q;
+  const bar = document.querySelector(".bar");
+  bar.setAttribute("aria-valuenow", idx);
+  bar.firstElementChild.style.width = (idx/12*100) + "%";
+  const box = $("choices"); box.innerHTML = "";
+  ["A","B"].forEach(l=>{
+    const b = document.createElement("button");
+    b.className = "choice" + (ans[idx]===l ? " sel" : "");
+    b.setAttribute("aria-pressed", ans[idx]===l ? "true" : "false");
+    b.innerHTML = '<span>'+l+'</span>';
+    b.appendChild(document.createTextNode(q[l]));
+    b.onclick = ()=>pick(l);
+    box.appendChild(b);
+  });
+  $("back").hidden = idx===0;
+  const t=$("qText"); t.setAttribute("tabindex","-1"); t.focus({preventScroll:true});
+}
+function pick(l){
+  if(lock) return; lockIt();
+  ans[idx] = l;
+  if(idx<11){ idx++; renderQ(); } else finish();
+}
+function compute(){
+  const bits=[0,0,0,0], cnt=[0,0,0,0];
+  Q.forEach((q,i)=>{ if(ans[i]===q.risk) cnt[q.a]++; });
+  cnt.forEach((c,i)=>{ bits[i]=c>=2?1:0; });
+  return {bits,cnt,code:bits.join("")};
+}
+const EMO={"0000":"🧊","0001":"🍪","0010":"🕳️","0011":"⛏️","0100":"🎲","0101":"🍳","0110":"🔥","0111":"🌀","1000":"🎯","1001":"🛍️","1010":"🛒","1011":"🥫","1100":"🎉","1101":"🍱","1110":"🚀","1111":"⚡"};
+const AC=["#ff9ec4","#ffd23f","#7ee8c4","#8fb4ff"];
+const SH=["購入","調理","保管","食べ切り"];
+function render(){
+  const {bits,code}=compute();
+  const [catchTxt,name,desc]=T[code];
+  $("codeLine").textContent="TYPE "+code;
+  $("emo").textContent=EMO[code];
+  $("catchTxt").textContent=catchTxt;
+  $("typeName").textContent=name+"！";
+  $("focus").textContent=desc;
+  $("pers").textContent=PERS[code];
+  $("lamps").innerHTML=AX.map((a,i)=>'<span class="stk'+(bits[i]?' on':'')+'">'+(bits[i]?'👀 ':'✓ ')+SH[i]+'</span>').join("");
+  const risky=[], safe=[];
+  Q.forEach((q,i)=>(ans[i]===q.risk?risky:safe).push(i));
+  risky.sort((a,b)=>(bits[Q[b].a]-bits[Q[a].a])||(a-b));
+  const gs=safe.slice().sort((a,b)=>(bits[Q[a].a]-bits[Q[b].a])||(a-b));
+  const gp=[], used=new Set();
+  gs.forEach(i=>{ if(gp.length<3 && !used.has(Q[i].a)){ gp.push(i); used.add(Q[i].a); } });
+  gs.forEach(i=>{ if(gp.length<3 && !gp.includes(i)) gp.push(i); });
+  $("goodList").innerHTML = gp.length ? gp.map(i=>'<li>'+QD[i].good+'</li>').join("") : '<li>食べ物への関心が高くて、行動力もある！ここが一番の武器だよ。</li>';
+  const top=risky.slice(0,3), rest=risky.slice(3);
+  $("expList").innerHTML = top.length ? top.map(i=>'<li>'+QD[i].bad+'</li>').join("") : '<li>今回は気になるところは見つからなかったよ！</li>';
+  $("moreExp").hidden = !rest.length;
+  $("moreSum").textContent = "ほかにも"+rest.length+"個";
+  $("moreList").innerHTML = rest.map(i=>'<li>'+QD[i].bad+'</li>').join("");
+  const cards=$("cards"); cards.innerHTML=""; $("doBox").hidden=true;
+  if(!top.length){
+    $("secTitle").textContent="いい感じ！";
+    cards.innerHTML='<div class="dobox"><b>今のペースをキープ！</b>買う前の確認や使い切りの工夫が、もう習慣になってるよ。冷蔵庫を見直す日を、たまに作れば完璧。</div>';
+  } else {
+    $("secTitle").textContent="今週やってみるなら？1つ選んでね";
+    top.forEach((i,k)=>{
+      const b=document.createElement("button");
+      b.className="pick"; b.setAttribute("role","radio"); b.setAttribute("aria-checked","false");
+      b.style.setProperty("--ac",AC[Q[i].a]);
+      b.innerHTML='<span class="no">'+(k+1)+'</span><span>'+QD[i].title+'</span>';
+      b.onclick=()=>{
+        cards.querySelectorAll(".pick").forEach(x=>x.setAttribute("aria-checked","false"));
+        b.setAttribute("aria-checked","true");
+        const d=$("doBox"); d.hidden=false;
+        d.innerHTML='<b>📍 こんな場面でやってみよう</b>'+QD[i].scene+'<p class="pg">くわしくは ガイドブック '+pgLinks(QD[i].pg)+'</p>';
+      };
+      cards.appendChild(b);
+    });
+  }
+  $("reviewList").innerHTML="";
+  Q.forEach((q,i)=>{
+    const row=document.createElement("div"); row.className="rv";
+    row.innerHTML='<small>Q'+(i+1)+'　'+q.q+'</small>';
+    ["A","B"].forEach(l=>{
+      const bt=document.createElement("button");
+      bt.className=ans[i]===l?"sel":"";
+      bt.setAttribute("aria-pressed",ans[i]===l?"true":"false");
+      bt.textContent=l+"　"+q[l];
+      bt.onclick=()=>{ if(ans[i]===l) return; ans[i]=l; queueSend(); render(); };
+      row.appendChild(bt);
+    });
+    $("reviewList").appendChild(row);
+  });
+  $("typeList").innerHTML=Object.keys(T).sort().map(c=>'<div class="tl'+(c===code?' me':'')+'"><span class="te">'+EMO[c]+'</span><span class="tn">'+T[c][1]+'</span><span class="tc">'+c+(c===code?'・あなた':'')+'</span></div>').join("");
+}
+function finish(){
+  queueSend(); render(); show("result");
+  const h=$("hero"); h.setAttribute("tabindex","-1"); h.focus({preventScroll:true});
+}
+$("go").onclick = ()=>{ if(lock) return; lockIt(); idx=0; ans=[]; show("quiz"); renderQ(); };
+$("back").onclick = ()=>{ if(idx>0){ idx--; renderQ(); } };
+$("retry").onclick = ()=>{ flush(); show("start"); };
+</script>
+</body>
+</html>
